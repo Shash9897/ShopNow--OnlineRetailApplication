@@ -210,6 +210,33 @@ LOCK TABLES `PRODUCT` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `REVIEW`
+--
+
+DROP TABLE IF EXISTS `REVIEW`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `REVIEW` (
+  `NAME` varchar(50) NOT NULL,
+  `CUSTOMER_ID` int DEFAULT NULL,
+  `EMAIL` varchar(255) NOT NULL,
+  `ADDRESS` varchar(255) DEFAULT NULL,
+  `CONTACT_NUMBER` int NOT NULL,
+  KEY `fk_review_customer` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_review_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `USER` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `REVIEW`
+--
+
+LOCK TABLES `REVIEW` WRITE;
+/*!40000 ALTER TABLE `REVIEW` DISABLE KEYS */;
+/*!40000 ALTER TABLE `REVIEW` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `TRANSACTIONS`
 --
 
@@ -302,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-10 13:26:31
+-- Dump completed on 2024-02-12 15:12:45
