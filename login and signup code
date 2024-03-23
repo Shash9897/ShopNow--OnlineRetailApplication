@@ -71,7 +71,7 @@ public class App extends Application {
         loginUserID.setPromptText("UserID");
         GridPane.setConstraints(loginUserID, 0, 1);
 
-        PasswordField loginPassword = new PasswordField();
+        TextField loginPassword = new TextField();
         loginPassword.setPromptText("Password");
         GridPane.setConstraints(loginPassword, 0, 2);
 
@@ -195,20 +195,60 @@ public class App extends Application {
     }
 
 
-    private int generateNewUserId() {
-        // Generate a new user ID as per your requirements (e.g., increment the maximum existing user ID)
-        // For simplicity, you can use a static variable to keep track of the last assigned user ID and increment it
-        // In a real application, you might use a database sequence or another method to generate unique IDs
-        // Here's a simple example using a static variable:
-        return getNextUserId();
+    private synchronized int getNextUserId() {
+        // Retrieve the last assigned user ID from the database or another persistent storage
+        int lastAssignedUserId = getLastAssignedUserIdFromDatabase();
+
+        // Increment the last assigned user ID and return it
+        return ++lastAssignedUserId;
     }
 
-    private synchronized int getNextUserId() {
-        // Increment the last assigned user ID and return it
-        // This method should be synchronized to prevent race conditions in a multi-threaded environment
-        // For simplicity, we'll just increment a static variable as an example
-        int lastAssignedUserId = 11; // You can initialize it from the database
-        return ++lastAssignedUserId;
+    private int getLastAssignedUserIdFromDatabase() {
+        int maxUserId = 0;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Establish a connection to the database
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/PROJECT", "root", "Shashwat@9897");
+
+            // Prepare the SQL query to retrieve the maximum user ID
+            String query = "SELECT MAX(USER_ID) AS max_user_id FROM USER";
+            statement = connection.prepareStatement(query);
+
+            // Execute the query
+            resultSet = statement.executeQuery();
+
+            // Retrieve the maximum user ID from the result set
+            if (resultSet.next()) {
+                maxUserId = resultSet.getInt("max_user_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the resources in the reverse order of their creation to avoid resource leaks
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return maxUserId;
+    }
+
+    private int generateNewUserId() {
+        // Generate a new user ID by calling the synchronized getNextUserId() method
+        return getNextUserId();
     }
 
     private boolean addUser(int userId, String name, String email, String address, String contactNumber, String password) {
