@@ -2,11 +2,12 @@ package org.example.dbms;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -34,52 +35,47 @@ public class App extends Application {
 
         // Initially show the login scene
         primaryStage.setScene(initialScene);
+
         primaryStage.show();
     }
 
     private void createInitialScene() {
-        GridPane initialGrid = new GridPane();
-        initialGrid.setPadding(new Insets(20, 20, 20, 20));
-        initialGrid.setVgap(10);
-        initialGrid.setHgap(10);
+        VBox initialBox = new VBox();
+        initialBox.setPadding(new Insets(20, 20, 20, 20));
+        initialBox.setSpacing(10);
+        initialBox.setAlignment(Pos.CENTER);
 
+        // Create login button
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> primaryStage.setScene(loginScene));
-        GridPane.setConstraints(loginButton, 0, 0);
+        loginButton.setStyle("-fx-font-size: 16px; -fx-min-width: 200px; -fx-min-height: 50px;");
 
+        // Create sign up button
         Button signUpButton = new Button("Sign Up");
         signUpButton.setOnAction(e -> primaryStage.setScene(signUpScene));
-        GridPane.setConstraints(signUpButton, 1, 0);
+        signUpButton.setStyle("-fx-font-size: 16px; -fx-min-width: 200px; -fx-min-height: 50px;");
 
-        initialGrid.getChildren().addAll(loginButton, signUpButton);
+        initialBox.getChildren().addAll(loginButton, signUpButton);
 
-
-        initialScene = new Scene(initialGrid, 300, 200);
+        initialScene = new Scene(initialBox, 323, 700);
     }
 
     private void createLoginScene() {
-        GridPane loginGrid = new GridPane();
-        loginGrid.setPadding(new Insets(20, 20, 20, 20));
-        loginGrid.setVgap(10);
-        loginGrid.setHgap(10);
-
-        Label loginLabel = new Label("Login");
-        GridPane.setConstraints(loginLabel, 0, 0);
+        VBox loginBox = new VBox();
+        loginBox.setPadding(new Insets(20));
+        loginBox.setSpacing(10);
+        loginBox.setAlignment(Pos.CENTER);
 
         TextField loginUserID = new TextField();
         loginUserID.setPromptText("UserID");
-        GridPane.setConstraints(loginUserID, 0, 1);
 
         TextField loginPassword = new TextField();
         loginPassword.setPromptText("Password");
-        GridPane.setConstraints(loginPassword, 0, 2);
 
         Label errorLabel = new Label(""); // Initially empty
         errorLabel.setStyle("-fx-text-fill: red;"); // Set text color to red
-        GridPane.setConstraints(errorLabel, 0, 3);
 
         Button loginButton = new Button("Login");
-        GridPane.setConstraints(loginButton, 1, 2);
         loginButton.setOnAction(e -> {
             String userID = loginUserID.getText();
             String password = loginPassword.getText();
@@ -95,11 +91,10 @@ public class App extends Application {
         });
 
         Button backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 1, 3);
         backButton.setOnAction(e -> primaryStage.setScene(initialScene));
 
-        loginGrid.getChildren().addAll(loginLabel, loginUserID, loginPassword, errorLabel, loginButton, backButton);
-        loginScene = new Scene(loginGrid, 300, 200);
+        loginBox.getChildren().addAll(loginUserID, loginPassword, errorLabel, loginButton, backButton);
+        loginScene = new Scene(loginBox, 323, 700);
     }
 
 
@@ -120,36 +115,27 @@ public class App extends Application {
     }
 
     private void createSignUpScene() {
-        GridPane signUpGrid = new GridPane();
-        signUpGrid.setPadding(new Insets(20, 20, 20, 20));
-        signUpGrid.setVgap(10);
-        signUpGrid.setHgap(10);
-
-        Label signUpLabel = new Label("Sign Up");
-        GridPane.setConstraints(signUpLabel, 0, 0);
+        VBox signUpBox = new VBox();
+        signUpBox.setPadding(new Insets(20));
+        signUpBox.setSpacing(10);
+        signUpBox.setAlignment(Pos.CENTER);
 
         TextField signUpName = new TextField();
         signUpName.setPromptText("Name");
-        GridPane.setConstraints(signUpName, 0, 1);
 
         TextField signUpEmail = new TextField();
         signUpEmail.setPromptText("Email");
-        GridPane.setConstraints(signUpEmail, 0, 2);
 
         TextField signUpAddress = new TextField();
         signUpAddress.setPromptText("Address");
-        GridPane.setConstraints(signUpAddress, 0, 3);
 
         TextField signUpContactNumber = new TextField();
         signUpContactNumber.setPromptText("Contact Number");
-        GridPane.setConstraints(signUpContactNumber, 0, 4);
 
         TextField signUpPassword = new TextField();
         signUpPassword.setPromptText("Password");
-        GridPane.setConstraints(signUpPassword, 0, 5);
 
         Button signUpButton = new Button("Sign Up");
-        GridPane.setConstraints(signUpButton, 1, 5);
         signUpButton.setOnAction(e -> {
             String name = signUpName.getText();
             String email = signUpEmail.getText();
@@ -173,11 +159,10 @@ public class App extends Application {
         });
 
         Button backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 1, 6);
         backButton.setOnAction(e -> primaryStage.setScene(initialScene));
 
-        signUpGrid.getChildren().addAll(signUpLabel, signUpName, signUpEmail, signUpAddress, signUpContactNumber, signUpPassword, signUpButton, backButton);
-        signUpScene = new Scene(signUpGrid, 400, 300);
+        signUpBox.getChildren().addAll(signUpName, signUpEmail, signUpAddress, signUpContactNumber, signUpPassword, signUpButton, backButton);
+        signUpScene = new Scene(signUpBox, 323, 700);
     }
 
     private boolean validateEmail(String email) {
