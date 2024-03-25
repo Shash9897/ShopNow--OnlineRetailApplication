@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.dbms.InitialSceneController"
+      prefWidth="323" prefHeight="700"
+      alignment="CENTER" spacing="10">
+
+    <Button text="Go to Login" onAction="#goToLogin"/>
+    <Button text="Go to SignUp" onAction="#goToSignUp"/>
+
+</VBox>

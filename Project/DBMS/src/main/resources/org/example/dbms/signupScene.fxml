@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.dbms.SignUpSceneController"
+      prefWidth="323" prefHeight="700"
+      alignment="CENTER" spacing="10">
+
+    <children>
+        <TextField promptText="Name"/>
+        <TextField promptText="Email"/>
+        <TextField promptText="Address"/>
+        <TextField promptText="Contact Number"/>
+        <TextField promptText="Password"/>
+        <Button text="Sign Up" onAction="#signUp"/>
+        <Button text="Back to Initial" onAction="#backToInitial"/>
+    </children>
+
+</VBox>
