@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SceneNavigator {
 
@@ -16,6 +17,8 @@ public class SceneNavigator {
 
     private static final Map<String, String> sceneMap = new HashMap<>();
     private static Stage stage;
+    private static Class<Object> getclass;
+    private static String currentScene;
 
     public static void setStage(Stage primaryStage) {
         stage = primaryStage;
@@ -27,12 +30,18 @@ public class SceneNavigator {
                 sceneMap.put(sceneName, sceneName);
             }
 
-            Parent root = FXMLLoader.load(SceneNavigator.class.getResource(sceneName));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(SceneNavigator.class.getResource(sceneName)));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            currentScene = sceneName; // Update current scene
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static String getCurrentScene() {
+        return currentScene;
+    }
+
 }

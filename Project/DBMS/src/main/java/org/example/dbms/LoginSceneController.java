@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 
 public class LoginSceneController {
 
+
     @FXML
     public void login() {
         // Implement login logic
